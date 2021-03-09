@@ -30,10 +30,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hitaraku/002_N_PRIV_VIRUSCHECKER.git"
+    "url": "git+https://github.com/hitaraku/0001_PB_Udemy_Cov19VirusChecker.git"
   },
   "bugs": {
-    "url": "https://github.com/hitaraku/002_N_PRIV_VIRUSCHECKER/issues"
+    "url": "https://github.com/hitaraku/0001_PB_Udemy_Cov19VirusChecker/issues"
   },
-  "homepage": "https://github.com/hitaraku/002_N_PRIV_VIRUSCHECKER#readme"
+  "homepage": "https://github.com/hitaraku/0001_PB_Udemy_Cov19VirusChecker#readme"
 }
