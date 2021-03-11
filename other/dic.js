@@ -1,8 +1,4 @@
-<% include partials/header %>
-
-<%
- // ここにdic.jsの内容をコピー。
- const dic = [
+const dic = [
     {ch:"美国", jp:"米国"},
     {ch:"英国", jp:"英国"},
     {ch:"法国", jp:"フランス"},
@@ -227,74 +223,3 @@
     {ch:"格陵兰", jp:"グリーンランド"},
     {ch:"泽西岛", jp:"ジャージー"}
 ];
-%>
-
-    <div class="container">
-        <header class="jumbotron">
-            <div class="container">
-                <h1>新型コロナウイルス感染者数確認WEBアプリ</h1>
-                <p>新型コロナウイルスの現在の感染者の統計を確認する為のWEBアプリです。</p>
-            </div>
-        </header>
-        
-        <%
-        // show date
-        function dateToStr24H(date, format) {
-            if (!format) {
-                format = 'Y/M/D h:m:s';
-            }
-            format = format.replace(/Y/g, date.getFullYear());
-            format = format.replace(/M/g, (date.getMonth() + 1));
-            format = format.replace(/D/g, date.getDate());
-            format = format.replace(/h/g, date.getHours());
-            format = format.replace(/m/g, date.getMinutes());
-            format = format.replace(/s/g, date.getSeconds());
-            return format;
-        }
-        %>
-        
-    　  <!-- 死者数による降順ソート -->
-        <%  
-        　  var sortArray = coronavirustimelines;
-            // sort by value
-            sortArray.sort(function (a, b) {
-                return b.deadCount - a.deadCount;
-            });
-            coronavirustimelines = sortArray;
-        %>
-        
-        <div class="row">
-            <%= "データ取得日時: " + dateToStr24H(gotDate, 'Y年M月D日 h時m分') %>
-        </div>
-        
-        <div name="Data" class="row" style="display:flex; flex-wrap: wrap;">
-            <table class="table table-striped  table-dark">
-              <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">国、場所名</th>
-                  <th scope="col">総合感染者数</th>
-                  <th scope="col">現在の感染者数</th>
-                  <th scope="col">治癒者数</th>
-                  <th scope="col">死者数</th>
-                </tr>
-              </thead>
-            　<tbody>
-                <% coronavirustimelines.slice(0, 20).forEach(function(coronavirustimeline, i){ %>
-                    <tr>
-                    <th scope="row"><%= i+1 %></th>
-                    <td><%= dic.find(o => o.ch === coronavirustimeline.countryName).jp %></td>
-                    <td><%= coronavirustimeline.confirmedCount %></td>
-                    <td><%= coronavirustimeline.currentConfirmedCount %></td>
-                    <td><%= coronavirustimeline.curedCount %></td>
-                    <td><%= coronavirustimeline.deadCount %></td>
-                    </tr>
-                <% }); %>
-              </tbody>
-            </table>
-        </div><!--  name="Data" -->
-    </div><!-- class="container" -->
-
-<% include partials/footer %>
-
-

@@ -1,12 +1,5 @@
-# CoronaVirus Web System
+# 新型コロナウイルス感染者数確認WEBアプ
 
-### How to configure mongodb password on this system?
-```
- mkdir secret
- touch secret/password.json
-```
-"mongoose_connection": "..."
-
-TODO Lisc
-### Set OGP
-### 
+### mongoDBのパスワードを設定。
+password.jsonファイルをsecretの中に移し、
+取得したパスワードを入力してください。

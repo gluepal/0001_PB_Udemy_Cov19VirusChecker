@@ -1,36 +1,25 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="icon" href="/resources/images/virusicon.png">
-        
-        <title>新型コロナウイルス感染　ヒートマップ</title>
-        
-
+        <title>新型コロナウイルス感染者数確認WEBアプリ</title>
+        <!-- ############################## -->
+        <!-- BootStrap4 -->
+        <!-- ############################## -->
         <!-- Latest compiled and minified CSS -->
         <meta content="width=device-width,initial-scale=1,shrink-to-fit=no" name="viewport">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.4.1/darkly/bootstrap.min.css">
+
+        <!-- ############################## -->
+        <!-- My Style -->
+        <!-- ############################## -->
         <link rel="stylesheet" href="/stylesheets/main.css">
     </head>
     
     <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="/">新型コロナウイルス感染　ヒートマップ</a>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/">新型コロナウイルス感染者数確認WEBアプリ</a>
+                </div>
             </div>
-        </div>
-    </nav>
-    
-    <div class="container" style="margin-top:10px;">
-        <% if(error && error.length > 0) { %>
-            <div class="alert alert-danger" role="alert">
-              <%=  error %>
-            </div>
-        <% } %>
-        <% if(success && success.length > 0) { %>
-            <div class="alert alert-success" role="alert">
-              <%= success %>
-            </div>
-        <% } %>
-    </div>
-
+        </nav>
