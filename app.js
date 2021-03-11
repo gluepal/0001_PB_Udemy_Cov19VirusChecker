@@ -1,23 +1,23 @@
 /**************************
-* Configure For Express and the others.
+* モジュール
 **************************/
 const express       = require("express"), 
-    app           = express(), 
-    bodyParser    = require("body-parser"), 
-    mongoose      = require("mongoose"),
-    flash         = require("connect-flash"),
-    methodOverride = require("method-override"),
-    Coronavirustimeline     = require("./models/coronavirustimeline"),
-    Wptimeline                 = require("./models/wptimeline"),
-    https = require("https"),
-    dateFormat  = require('dateformat'),
-    fs                = require("fs"),
-    csv               = require("csv"),
-    middleware  = require("./middleware/index.js"),
-    cron = require('node-cron');
+    app             = express(), 
+    bodyParser      = require("body-parser"), 
+    mongoose        = require("mongoose"),
+    methodOverride  = require("method-override"),
+    https           = require("https"),
+    dateFormat      = require('dateformat'),
+    fs              = require("fs"),
+    cron            = require('node-cron');
+
+// 独自作成
+const middleware            = require("./middleware/index.js"),
+    Coronavirustimeline     = require("./models/coronavirustimeline");
+
 
 /**************************
-* Mongoose Connection
+* Mongoose 接続
 **************************/
 // Get content from file
 var connecturl;
@@ -40,7 +40,9 @@ mongoose.connect(connecturl, function(err, db){
 });
 
 /**************************
-* Get coronavirus data from DXY-2019-nCoV-Crawler
+* 最新の感染者数をサイトから取得。
+* Cronにより、一定時間経過後に再取得し、
+* MonogoDBに保存する。
 **************************/
 const url           = 'https://lab.isaaclin.cn/nCoV/',
       areaUrl   = url + 'api/area';
@@ -82,90 +84,24 @@ cron.schedule('0 * * * *', () => {
     }).on('error', function(e){
           console.log("Got an error: ", e);
     });
-
-    // For get json from Wordpress
-    var url = "https://virus.evelinks.org/wp-json/wp/v2/posts"
-    var wpPostUrlJson = url /* + "?_fields=author,id,excerpt,title,link" */;
-    var reqWp = https.get(wpPostUrlJson, function(res){
-        var body = '';
-        var dateTime = new Date().toLocaleString("en-US", {timeZone: "Asia/Tokyo"});
-
-        res.on('data', function(chunk){
-            body += chunk;
-        });
-    
-        res.on('end', function(){
-            try {
-                var wpResponse = JSON.parse(body); 
-                var newWptimeline = {
-                    wpPostsAll: wpResponse,
-                    gotDate: dateTime,
-                }
-                Wptimeline.remove({}, function(err) { 
-                    if(err) {
-                        console.log("remove wp collection : " + err);
-                    } else {
-                        console.log('collection removed') 
-                    }
-                });
-                // create a new shopuser and save to DB.
-                Wptimeline.create(newWptimeline, function(err, newlyCreated){
-                    if(err) {
-                        console.log("Got store wordpress to database error : " + err);
-                    } else {
-                        console.log("success store wordpress article title to database");
-                    }
-                });
-            } catch (e) {
-                console.log("Error Got a HTML : ", e);
-            }
-        });
-    }).on('error', function(e){
-        console.log("Got an error: ", e);
-    });
 });
 
-
 /**************************
-* Require For Route
-**************************/
-var indexRoutes         = require("./routes/index");
-
-/**************************
-* Configure for API, css, ejs...
+* API, css, ejsを設定。
 **************************/
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"));
-app.use(flash());
 
 /**************************
-* Initialize Passport and restore authentication state, if any, 
-* from the session
+* ルート設定
 **************************/
-app.use(require("express-session")({
-    secret: "Once again Rusty again",
-    resave: false,
-    saveUninitialized: false
-}));
-
-// configuser for currentuser
-app.use(function(req, res, next){
-    res.locals.currentUser = req.user;
-    res.locals.error = req.flash("error");
-    res.locals.success = req.flash("success");
-    next();
-});
-
-/**************************
-* Configure For Routes
-**************************/
+// Mainルート. 初期ページはここにアクセス
+var indexRoutes         = require("./routes/index");
 app.use("/", indexRoutes);
 
-/**************************
-* Redirect Not Found Page
-**************************/
+// 404ルート. ページがない場合、全てここにアクセス。
 app.get("*", function(req, res) {
     res.render("404"); 
 });

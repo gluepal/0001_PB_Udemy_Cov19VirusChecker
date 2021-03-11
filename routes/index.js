@@ -1,8 +1,9 @@
 var express     = require("express"),
     router      = express.Router(),
-    Wptimeline = require("../models/wptimeline"),
+    middleware  = require("../middleware"),
     Coronavirustimeline = require("../models/coronavirustimeline"),
     Countrydictionary = require("../models/countrydictionary");
+
 
 /*************************
 * Configure for Route
@@ -13,25 +14,17 @@ router.get("/", function(req, res){
         if(err) {
             console.log(err);
         } else {
-            Wptimeline.findOne({}).sort({ gotDate: 'desc'}).exec(function(err, latestWptimeline){ 
+            Countrydictionary.find({}).exec(function(err, latestCountrydictionarys) {
                 if(err) {
-                    console.err("Wptimeline err: " + err);
+                    console.log(err);
                 } else {
-                    Countrydictionary.find({}).exec(function(err, latestCountrydictionarys) {
-                        if(err) {
-                            console.log(err);
-                        } else {
-                            res.render("landing", {
-                                wptimelines: latestWptimeline.wpPostsAll, 
-                                coronavirustimelines: latestCoronavirustimeline.cornavirusoverall.results, 
-                                countrydictionarys: latestCountrydictionarys,
-                                gotDate: latestCoronavirustimeline.gotDate
-                            });
-                        }
+                    res.render("landing", {
+                        coronavirustimelines: latestCoronavirustimeline.cornavirusoverall.results, 
+                        countrydictionarys: latestCountrydictionarys,
+                        gotDate: latestCoronavirustimeline.gotDate
                     });
                 }
             });
-            // res.render("landing", {coronavirustimelines: latestCoronavirustimeline.cornavirusoverall.results, gotDate: latestCoronavirustimeline.gotDate});
         }
     });
 });

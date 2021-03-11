@@ -8,7 +8,7 @@ var middlewareObj = {}
 /**
  * This Section is translate and mongoose store function *
 **/
-const projectId = 'n-priv-viruschecker';
+const projectId = '<Your Google Api Project Id>';
 const location = 'global';
 
 // Imports the Google Cloud Translation library
@@ -150,15 +150,5 @@ middlewareObj.namedic = function(req, res, next) {
         }
     });
 }
-
-// var middlewareObj = {}
-
-// middlewareObj.isLoggedIn = function(req, res, next) {
-//     if(req.isAuthenticated()) {
-//         return next();
-//     }
-//     req.flash("error", "ログインしてください。");
-//     res.redirect("/login");
-// }
 
 module.exports = middlewareObj;
