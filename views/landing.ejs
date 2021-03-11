@@ -253,12 +253,12 @@
         }
         %>
         
-    　  <!-- 死者数による降順ソート -->
+    　  <!-- 総合感染者数による降順ソート -->
         <%  
         　  var sortArray = coronavirustimelines;
             // sort by value
             sortArray.sort(function (a, b) {
-                return b.deadCount - a.deadCount;
+                return b.confirmedCount - a.confirmedCount;
             });
             coronavirustimelines = sortArray;
         %>
