@@ -46,7 +46,7 @@
 
     <%
     var arrayCorona = [];
-    coronavirustimelines.forEach(function(coronavirustimeline, i){
+    data.forEach(function(coronavirustimeline, i){
         arrayCorona.push(coronavirustimeline.countryName);
     });
     // 重複を削除したリスト
@@ -60,7 +60,7 @@
     var repeatDeleteArray_4_confirmedCount = [];
     var repeatDeleteArray_4_curedCount = [];
     var repeatDeleteArray_4_deadCount = [];
-    coronavirustimelines.forEach(function(coronavirustimeline, i){
+    data.forEach(function(coronavirustimeline, i){
         repeatDeleteArray_4_currentConfirmedCount.push({
             countryName: coronavirustimeline.countryName,
             provinceName: coronavirustimeline.provinceName,

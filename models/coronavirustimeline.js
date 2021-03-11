@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const CoronavirustimelineSchema = new mongoose.Schema({
-    cornavirusoverall: Object,
+    data: Object,
     gotDate: Date,
 });
 
