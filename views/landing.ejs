@@ -255,12 +255,12 @@
         
     　  <!-- 総合感染者数による降順ソート -->
         <%  
-        　  var sortArray = coronavirustimelines;
+        　  var sortArray = data;
             // sort by value
             sortArray.sort(function (a, b) {
                 return b.confirmedCount - a.confirmedCount;
             });
-            coronavirustimelines = sortArray;
+            data = sortArray;
         %>
         
         <div class="row">
@@ -280,14 +280,14 @@
                 </tr>
               </thead>
             　<tbody>
-                <% coronavirustimelines.slice(0, 20).forEach(function(coronavirustimeline, i){ %>
+                <% data.slice(0, 20).forEach(function(eachData, i){ %>
                     <tr>
                     <th scope="row"><%= i+1 %></th>
-                    <td><%= dic.find(o => o.ch === coronavirustimeline.countryName).jp %></td>
-                    <td><%= coronavirustimeline.confirmedCount %></td>
-                    <td><%= coronavirustimeline.currentConfirmedCount %></td>
-                    <td><%= coronavirustimeline.curedCount %></td>
-                    <td><%= coronavirustimeline.deadCount %></td>
+                    <td><%= dic.find(o => o.ch === eachData.countryName).jp %></td>
+                    <td><%= eachData.confirmedCount %></td>
+                    <td><%= eachData.currentConfirmedCount %></td>
+                    <td><%= eachData.curedCount %></td>
+                    <td><%= eachData.deadCount %></td>
                     </tr>
                 <% }); %>
               </tbody>

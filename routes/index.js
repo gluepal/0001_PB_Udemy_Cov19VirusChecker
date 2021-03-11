@@ -16,7 +16,7 @@ router.get("/", function(req, res){
             console.log(err);
         } else {
             res.render("landing", {
-                coronavirustimelines: latestCoronavirustimeline.cornavirusoverall.results, 
+                data: latestCoronavirustimeline.data.results, 
                 dic: dic,
                 gotDate: latestCoronavirustimeline.gotDate
             });

@@ -8,7 +8,7 @@ const express       = require("express"),
     fs              = require("fs");
     
 // Created Model
-const Coronavirustimeline     = require("./models/coronavirustimeline");
+const Coronavirustimeline     = require("../models/coronavirustimeline");
 
 /**************************
 * Mongoose Connection
@@ -51,7 +51,7 @@ const req = https.get(areaUrl, function(res){
         try {
             var fbResponse = JSON.parse(body);
             var newCoronavirustimeline = {
-                cornavirusoverall: fbResponse,
+                data: fbResponse,
                 gotDate: dateTime,
             }
             // create a new shopuser and save to DB.
